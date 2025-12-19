@@ -10,6 +10,9 @@
 #
 # Changing knobs => different signature => new real stamp => objects rebuild.
 
+# Use '>' as recipe prefix to avoid TAB footgun (GNU Make ≥4.0)
+.RECIPEPREFIX := >
+
 # Prefer sha256sum (widely available, cryptographic) with cksum fallback.
 # Documented risk: cksum collision probability higher on large flag sets,
 # but sufficient for short semantic signatures. sha256sum absent on minimal systems.
@@ -32,21 +35,21 @@ FLAGS_STAMP      := $(BLD_DIR)/flags.stamp
 
 # Real stamp: name changes when knobs change; content is the semantic state.
 $(FLAGS_STAMP_REAL): | $(BLD_DIR)/
-	printf '%s\n' "$(FLAGS_LINE)" > $@
+>     printf '%s\n' "$(FLAGS_LINE)" > $@
 
 # Canonical name for humans/tools; rebuilt only when REAL changes.
 $(FLAGS_STAMP): $(FLAGS_STAMP_REAL) | $(BLD_DIR)/
-	cp -f $< $@
+>     cp -f $< $@
 
 # Optional tool/environment attestations (NOT dependencies of `all` by default)
 stamps/tool/cc.txt: FORCE | stamps/tool/
-	$(CC) --version > $@ || true
+>     $(CC) --version > $@ || true
 
 stamps/env.txt: FORCE | stamps/
-	printf 'PATH=%s\nLC_ALL=%s\nTZ=%s\n' "$$PATH" "$${LC_ALL:-}" "$${TZ:-}" > $@
+>     printf 'PATH=%s\nLC_ALL=%s\nTZ=%s\n' "$$PATH" "$${LC_ALL:-}" "$${TZ:-}" > $@
 
 stamps/:
-	mkdir -p $@
+>     mkdir -p $@
 
 stamps/tool/:
-	mkdir -p $@
+>     mkdir -p $@

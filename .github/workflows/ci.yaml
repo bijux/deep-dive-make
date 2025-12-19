@@ -39,8 +39,8 @@ jobs:
       - name: Install GNU Make (macOS)
         if: runner.os == 'macOS'
         run: |
-          brew update || brew upgrade
-          brew install make
+          brew install make || true   # idempotent if already present
+          brew link --overwrite make || true
 
       - name: Run capstone selftest
         run: |

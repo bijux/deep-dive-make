@@ -6,7 +6,7 @@ on:
     paths:
       - mkdocs.yml
       - requirements-docs.txt
-      - ../../course-book/**
+      - course-book/**
       - .github/workflows/pages.yaml
   workflow_dispatch:
 
