@@ -36,7 +36,7 @@ By the end of this module you can:
 * Test the **build system itself**: convergence + serial/parallel equivalence + meaningful negative tests in a sandbox.
 * Use Make as a DSL **without destroying inspectability**: macros enforce invariants; `eval` is bounded, auditable, and switchable.
 
-<span style="font-size: 1em;">[Back to top](#top)</span>
+[Back to top](#top)
 
 ---
 
@@ -90,7 +90,7 @@ gmake -C project selftest
 #### `project/Makefile`
 
 ```make
-# project/Makefile — Module 03 simulator (GNU Make ≥ 4.0)
+# project/Makefile — Module 03 simulator (GNU Make ≥ 4.3)
 #
 # Contract: deterministic discovery + modeled hidden inputs + atomic publish + selftests.
 
@@ -484,7 +484,7 @@ A build passes Module 03 only if all are true:
 * **Meaningful negative test**: inject a hidden input → the system stops converging and/or fails equivalence.
 * **Inspectable**: rebuilds are justified with `--trace`, not guesswork.
 
-<span style="font-size: 1em;">[Back to top](#top)</span>
+[Back to top](#top)
 
 ---
 
@@ -606,7 +606,7 @@ make clean && make -j4 all
 make selftest       # must pass equivalence + convergence
 ```
 
-<span style="font-size: 1em;">[Back to top](#top)</span>
+[Back to top](#top)
 
 ---
 
@@ -679,7 +679,7 @@ make --trace all
 
 If you can’t point to the trace line that triggered a rebuild, you haven’t located the cause.
 
-<span style="font-size: 1em;">[Back to top](#top)</span>
+[Back to top](#top)
 
 ---
 
@@ -765,7 +765,7 @@ make selftest
 
 and treat any non-zero exit as a regression, not “a Make quirk.”
 
-<span style="font-size: 1em;">[Back to top](#top)</span>
+[Back to top](#top)
 
 ---
 
@@ -843,7 +843,7 @@ test "$H1" = "$H2"
 make -q all   # must be 0 after success
 ```
 
-<span style="font-size: 1em;">[Back to top](#top)</span>
+[Back to top](#top)
 
 ---
 
@@ -924,7 +924,7 @@ make USE_EVAL=no  selftest
 
 If disabling eval breaks your core build, you failed the quarantine.
 
-<span style="font-size: 1em;">[Back to top](#top)</span>
+[Back to top](#top)
 
 ---
 
@@ -956,7 +956,7 @@ make -C make-capstone USE_EVAL=yes eval-demo
 * Capability gates / contracts: `make-capstone/mk/contract.mk`
 * Public API surface: `make-capstone/Makefile`
 
-<span style="font-size: 1em;">[Back to top](#top)</span>
+[Back to top](#top)
 
 ---
 
@@ -1039,7 +1039,7 @@ make USE_EVAL=yes selftest
 **Forensics**: `make -p | grep -E '^[^#].*:'` (spot-check generated rules), plus `--trace eval-demo`.
 **Fix**: reduce rule generation until it is finite, legible, and independent of unstable discovery.
 
-<span style="font-size: 1em;">[Back to top](#top)</span>
+[Back to top](#top)
 
 ---
 
@@ -1075,6 +1075,6 @@ You pass Module 03 only if you can demonstrate all of the following in your **lo
 
 Next: Module 04 becomes your lookup layer under pressure; Module 05 hardens portability, hermeticity, and performance engineering.
 
-<span style="font-size: 1em;">[Back to top](#top)</span>
+[Back to top](#top)
 
 ---

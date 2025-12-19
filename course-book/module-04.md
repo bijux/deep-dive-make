@@ -36,7 +36,7 @@ By the end of this module, you can:
 * Use advanced rule features (multi-output, selection, parallel controls) without breaking convergence or `-j` safety.
 * Maintain a “special targets” mental map: what each does, when it’s justified, and what it ruins.
 
-<span style="font-size: 1em;">[Back to top](#top)</span>
+[Back to top](#top)
 
 ---
 
@@ -95,7 +95,7 @@ make --trace
 
 You will replace that Makefile per “Minimal repro” blocks below.
 
-<span style="font-size: 1em;">[Back to top](#top)</span>
+[Back to top](#top)
 
 ---
 
@@ -176,7 +176,7 @@ make -W in --trace a
 
   Expected: first prints `0`, second prints `1`.
 
-<span style="font-size: 1em;">[Back to top](#top)</span>
+[Back to top](#top)
 
 ---
 
@@ -256,7 +256,7 @@ make CFLAGS=CLI show
   * the `origin` output for each case (file/env/command),
   * and you can explain why `-e` flips env precedence.
 
-<span style="font-size: 1em;">[Back to top](#top)</span>
+[Back to top](#top)
 
 ---
 
@@ -317,7 +317,7 @@ all: ; @echo ok
 
   and showing the computed feature variable.
 
-<span style="font-size: 1em;">[Back to top](#top)</span>
+[Back to top](#top)
 
 ---
 
@@ -390,7 +390,7 @@ Run `make` twice. Then break determinism by writing timestamps into `gen.mk` and
 
   Then run `make -n` and show the include order is stable.
 
-<span style="font-size: 1em;">[Back to top](#top)</span>
+[Back to top](#top)
 
 ---
 
@@ -472,7 +472,7 @@ a.h a.c: $(GEN_STAMP)
 
   Expected: generator runs once per logical regeneration; no duplicated recipe lines.
 
-<span style="font-size: 1em;">[Back to top](#top)</span>
+[Back to top](#top)
 
 ---
 
@@ -507,7 +507,7 @@ What each proves:
 * `portability-audit`: feature gates computed, not guessed
 * `eval-demo`: bounded rule generation remains inspectable
 
-<span style="font-size: 1em;">[Back to top](#top)</span>
+[Back to top](#top)
 
 ---
 
@@ -564,7 +564,7 @@ Format is **Task → Expected → Forensics → Fix**. Do these first in a scrat
 * Forensics: `--trace` shows `.PHONY` forces out-of-date.
 * Fix: `.PHONY` only for non-file orchestration targets.
 
-<span style="font-size: 1em;">[Back to top](#top)</span>
+[Back to top](#top)
 
 ---
 
@@ -578,6 +578,6 @@ You pass Module 04 only if you can do all of the following without guessing:
 * Given “only fails under `-j`”, you can classify it as missing edge vs multi-writer vs non-atomic publish vs multi-output rule bug, and apply the correct fix.
 * Given a feature (`&:`, `.WAIT`, `.ONESHELL`, `--output-sync`), you can state the **capability gate** and provide a fallback that preserves correctness.
 
-<span style="font-size: 1em;">[Back to top](#top)</span>
+[Back to top](#top)
 
 ---

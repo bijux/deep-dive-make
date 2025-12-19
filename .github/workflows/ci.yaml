@@ -46,6 +46,18 @@ jobs:
         run: |
           ${{ matrix.make_cmd }} -C make-capstone selftest
 
+      - name: Capture trace for debugging
+        if: always()
+        run: |
+          ${{ matrix.make_cmd }} -C make-capstone --trace selftest > selftest-trace-${{ runner.os }}.txt || true
+
+      - name: Upload selftest trace
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: selftest-trace-${{ runner.os }}
+          path: selftest-trace-${{ runner.os }}.txt
+
       - name: Portability audit (informational)
         if: always()
         run: |

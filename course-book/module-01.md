@@ -34,7 +34,7 @@ By the end of this module you can:
 * Identify “hidden inputs” and model them as **explicit prerequisites** (often via a convergent stamp).
 * Write rules that remain correct under edits and failures: **one writer per output**, **no partial artifacts**, **convergent rebuild behavior**.
 
-<span style="font-size: 1em;">[Back to top](#top)</span>
+[Back to top](#top)
 
 ---
 
@@ -128,7 +128,7 @@ A build passes Module 01 only if all are true:
 * **Atomic publish:** outputs appear only when complete.
 * **Convergence:** after a successful build, `make -q all` exits `0` (no perpetual rebuild loops).
 
-<span style="font-size: 1em;">[Back to top](#top)</span>
+[Back to top](#top)
 
 ---
 
@@ -172,7 +172,7 @@ make clean && make all && make --trace all
 
 Second run must show no rebuild decisions for core targets (or `make -q all` must exit `0`).
 
-<span style="font-size: 1em;">[Back to top](#top)</span>
+[Back to top](#top)
 
 ---
 
@@ -232,7 +232,7 @@ Must exit `0`. Then change a semantic input (e.g., `make CFLAGS=-O0 all`) and ob
 make CFLAGS=-O0 --trace all
 ```
 
-<span style="font-size: 1em;">[Back to top](#top)</span>
+[Back to top](#top)
 
 ---
 
@@ -274,7 +274,7 @@ make -p | sed -n '/^# Pattern-specific Variable Values/,/^[^#]/p'
 
 and `make --trace <target>` to confirm which rule was selected and why.
 
-<span style="font-size: 1em;">[Back to top](#top)</span>
+[Back to top](#top)
 
 ---
 
@@ -338,7 +338,7 @@ make -p | grep -E '^(NOW|CFLAGS|SRCS)\b'
 
 Use this to verify values are stable and originate where you expect.
 
-<span style="font-size: 1em;">[Back to top](#top)</span>
+[Back to top](#top)
 
 ---
 
@@ -385,7 +385,7 @@ Insert `false` before the final `mv` in a rule that writes `$@`. If `$@` is writ
 Paste this into `project/Makefile`:
 
 ```make
-# Makefile — Module 01 (GNU Make ≥ 4.0; /bin/sh)
+# Makefile — Module 01 (GNU Make ≥ 4.3; /bin/sh)
 #
 # Goal: smallest build that is (1) graph-correct, (2) failure-safe, (3) convergent.
 
@@ -458,7 +458,7 @@ clean:
     rm -rf $(BLD_DIR) app
 ```
 
-<span style="font-size: 1em;">[Back to top](#top)</span>
+[Back to top](#top)
 
 ---
 
@@ -484,7 +484,7 @@ make -C make-capstone --trace all
 * Top-level orchestration and public targets: `make-capstone/Makefile`
 * Proof harness: `make-capstone/tests/run.sh`
 
-<span style="font-size: 1em;">[Back to top](#top)</span>
+[Back to top](#top)
 
 ---
 
@@ -567,7 +567,7 @@ make clean && (make all || true) && test -f app && echo "app exists" || echo "ap
 **Forensics**: `ls -la app app.tmp*` to verify no plausible final artifact.
 **Fix**: keep atomic publish; ensure temp cleanup runs on failure.
 
-<span style="font-size: 1em;">[Back to top](#top)</span>
+[Back to top](#top)
 
 ---
 
@@ -601,4 +601,4 @@ You can point to the `--trace` line that justifies the rebuild.
 
 If you can’t prove these, you don’t “basically understand Make”—you’re still guessing.
 
-<span style="font-size: 1em;">[Back to top](#top)</span>
+[Back to top](#top)

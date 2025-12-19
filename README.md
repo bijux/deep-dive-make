@@ -8,8 +8,10 @@ A course-book and executable capstone that teaches **GNU Make as a build-graph e
 [![GNU Make](https://img.shields.io/badge/GNU%20Make-4.3%2B-blue?style=flat-square)](https://www.gnu.org/software/make/)
 [![License](https://img.shields.io/github/license/bijux/deep-dive-make?style=flat-square)](https://github.com/bijux/deep-dive-make/blob/main/LICENSE)
 [![Docs](https://img.shields.io/badge/docs-site-blue?style=flat-square)](https://bijux.github.io/deep-dive-make/)
+[![CI Ubuntu](https://github.com/bijux/deep-dive-make/actions/workflows/ci.yaml/badge.svg?query=branch%3Amain+runner%3Aubuntu-latest)](https://github.com/bijux/deep-dive-make/actions/workflows/ci.yaml?query=branch%3Amain+runner%3Aubuntu-latest)
+[![CI macOS](https://github.com/bijux/deep-dive-make/actions/workflows/ci.yaml/badge.svg?query=branch%3Amain+runner%3Amacos-latest)](https://github.com/bijux/deep-dive-make/actions/workflows/ci.yaml?query=branch%3Amain+runner%3Amacos-latest)
 [![Capstone](https://img.shields.io/badge/capstone-make--capstone-green?style=flat-square)](https://github.com/bijux/deep-dive-make/tree/main/make-capstone)
-
+> CI runs selftest on Ubuntu and macOS. View runs for logs/artifacts.
 ---
 
 ## What this is
@@ -26,7 +28,7 @@ Most Makefiles “work” until they don’t: hidden inputs, phony ordering, sta
 
 This is a practical step toward *real* understanding of Make: what it guarantees, what it does not, and how to design Makefiles that remain correct as projects grow.
 
-<span style="font-size: 1em;">[Back to top](#top)</span>
+[Back to top](#top)
 
 ---
 
@@ -52,17 +54,18 @@ Read on the website: https://bijux.github.io/deep-dive-make/
 
 Small, isolated examples of common pitfalls (races, stamp lies, mkdir hazards, generated header modeling) meant to be *reproduced*, not merely described.
 
-<span style="font-size: 1em;">[Back to top](#top)</span>
+[Back to top](#top)
 
 ---
 
 ## Quick start
+From the repository root:
 
 ### Linux (GNU Make)
 
 ```sh
 make -C make-capstone selftest
-````
+```
 
 ### macOS (GNU Make via Homebrew)
 
@@ -73,7 +76,7 @@ gmake -C make-capstone selftest
 
 If `selftest` passes, you’ve validated the capstone’s contract on your machine.
 
-<span style="font-size: 1em;">[Back to top](#top)</span>
+[Back to top](#top)
 
 ---
 
@@ -81,7 +84,7 @@ If `selftest` passes, you’ve validated the capstone’s contract on your machi
 
 ```text
 .
-├── book/                 # Course-book source (MkDocs)
+├── course-book/         # Course-book source (MkDocs)
 │   ├── module-00.md
 │   ├── module-01.md
 │   ├── module-02.md
@@ -102,7 +105,7 @@ If `selftest` passes, you’ve validated the capstone’s contract on your machi
 └── README.md
 ```
 
-<span style="font-size: 1em;">[Back to top](#top)</span>
+[Back to top](#top)
 
 ---
 
@@ -114,7 +117,7 @@ If `selftest` passes, you’ve validated the capstone’s contract on your machi
 
 This is not “Make syntax tutorials.” It is **build semantics and correctness engineering** with Make as the tool.
 
-<span style="font-size: 1em;">[Back to top](#top)</span>
+[Back to top](#top)
 
 ---
 
@@ -123,18 +126,15 @@ This is not “Make syntax tutorials.” It is **build semantics and correctness
 Contributions that improve correctness, clarity, or reproducibility are welcome (typos, exercises, minimal repros, capstone hardening).
 
 1. Fork & clone
-
 2. Make a focused change (docs or capstone)
-
-3. Run:
-
+3. From the repository root, verify:
    ```sh
-   gmake -C make-capstone selftest
+   make -C make-capstone selftest
    ```
-
+   (or `gmake -C make-capstone selftest` on macOS)
 4. Open a PR against `main`
 
-<span style="font-size: 1em;">[Back to top](#top)</span>
+[Back to top](#top)
 
 ---
 
@@ -142,4 +142,4 @@ Contributions that improve correctness, clarity, or reproducibility are welcome 
 
 MIT — see [LICENSE](LICENSE). © 2025 Bijan Mousavi.
 
-<span style="font-size: 1em;">[Back to top](#top)</span>
+[Back to top](#top)

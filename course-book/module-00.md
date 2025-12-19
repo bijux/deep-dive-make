@@ -10,7 +10,7 @@ A five-module course-book that treats **GNU Make as a build-graph engine** with 
 - **Determinism**: serial and parallel runs converge to identical results.
 - **Testable invariants**: correctness is verified, not assumed.
 
-This repository contains both the text (**`book/`**) and a runnable reference implementation (**`make-capstone/`**) that proves the claims.
+This repository contains both the text (**`course-book/`**) and a runnable reference implementation (**`make-capstone/`**) that proves the claims.
 
 ---
 
@@ -33,7 +33,7 @@ This repository contains both the text (**`book/`**) and a runnable reference im
 
 **Deliverable:** A small Makefile that (1) converges, (2) rebuilds correctly on header edits via depfiles, (3) models at least one hidden input, (4) publishes atomically, and (5) remains correct after an induced failure.
 
-<span style="font-size: 1em;">[Back to top](#top)</span>
+[Back to top](#top)
 
 ---
 
@@ -56,7 +56,7 @@ This repository contains both the text (**`book/`**) and a runnable reference im
 
 **Deliverable:** A parallel-safe build with selftests enforcing convergence + serial/parallel equivalence, plus a repro pack demonstrating and fixing at least three distinct race classes.
 
-<span style="font-size: 1em;">[Back to top](#top)</span>
+[Back to top](#top)
 
 ---
 
@@ -79,7 +79,7 @@ This repository contains both the text (**`book/`**) and a runnable reference im
 
 **Deliverable:** A CI-ready contract (`all`/`test`/`selftest`), deterministic discovery, a selftest harness with a negative hidden-input test, and a quarantined `eval` demo.
 
-<span style="font-size: 1em;">[Back to top](#top)</span>
+[Back to top](#top)
 
 ---
 
@@ -102,7 +102,7 @@ This repository contains both the text (**`book/`**) and a runnable reference im
 
 **Deliverable:** A practical runbook: reproducible CLI debugging steps, proven variable provenance, a fixed include/restart issue, and a multi-output generator proven to run exactly once per logical generation.
 
-<span style="font-size: 1em;">[Back to top](#top)</span>
+[Back to top](#top)
 
 ---
 
@@ -125,7 +125,7 @@ This repository contains both the text (**`book/`**) and a runnable reference im
 
 **Deliverable:** A hardened capstone: portability audit + jobserver proof + modeled inputs + non-poisoning attestations + profiling guardrails + a migration drill demonstrating a clean hybrid boundary.
 
-<span style="font-size: 1em;">[Back to top](#top)</span>
+[Back to top](#top)
 
 ---
 
@@ -141,7 +141,7 @@ The capstone is the executable realization of Modules 01–05:
 **Truth command:**
 ```sh
 make -C make-capstone selftest
-````
+```
 
 macOS:
 
@@ -149,4 +149,4 @@ macOS:
 gmake -C make-capstone selftest
 ```
 
-<span style="font-size: 1em;">[Back to top](#top)</span>
+[Back to top](#top)

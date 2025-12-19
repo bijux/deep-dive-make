@@ -38,7 +38,7 @@ By the end, you can:
 * Measure and reduce Make overhead using profiling, trace volume, and parse-time cost control.
 * Decide when Make is no longer the core tool using a rubric, and migrate via safe hybrids without losing your proof harness.
 
-<span style="font-size: 1em;">[Back to top](#top)</span>
+[Back to top](#top)
 
 ---
 
@@ -95,7 +95,7 @@ A hardened build must satisfy all:
 * **Measured**: you can produce at least one trace-volume metric and one timed parse/decision metric.
 * **Proof harness exists**: convergence + equivalence + at least one negative test.
 
-<span style="font-size: 1em;">[Back to top](#top)</span>
+[Back to top](#top)
 
 ---
 
@@ -141,19 +141,22 @@ On versions without `.WAIT`, this is not the barrier you think it is.
 **Gate features and provide a deterministic fallback.**
 
 ```make
-# ---- Contract gate: require GNU Make >= 4.0 ----
-GNU_GE_4_0 := $(filter 4.% 5.%,$(MAKE_VERSION))
-ifeq ($(GNU_GE_4_0),)
-  $(error GNU Make >= 4.0 required; got $(MAKE_VERSION))
+# mk/contract.mk — feature gates, version checks (Module 05 discipline)
+
+# GNU Make ≥ 4.3 required (core contract for grouped targets and full patterns).
+# MAKE_VERSION is provided by GNU Make. If missing, this Make is unsupported.
+ifeq ($(origin MAKE_VERSION),undefined)
+  $(error This repository requires GNU Make (MAKE_VERSION not defined).)
 endif
 
-# ---- Feature probes ----
-HAVE_WAIT   := $(filter 4.4%,$(MAKE_VERSION))
-HAVE_GROUPED:= $(filter 4.3% 4.4% 5.%,$(MAKE_VERSION))
-
-ifeq ($(HAVE_WAIT),)
-  $(warning No .WAIT available; use order-only / explicit edges)
+GNU_GE_4_3 := $(filter 4.3% 4.4% 5.%,$(MAKE_VERSION))
+ifeq ($(GNU_GE_4_3),)
+  $(error GNU Make >= 4.3 required for grouped targets and full patterns (found $(MAKE_VERSION)).)
 endif
+
+# Feature probes (used for optional demos; do not change core correctness).
+HAVE_GROUPED_TARGETS := $(filter 4.3% 4.4% 5.%,$(MAKE_VERSION))
+HAVE_WAIT            := $(filter 4.4% 5.%,$(MAKE_VERSION))
 ```
 
 ### Proof hook
@@ -173,18 +176,18 @@ endif
 
 Use this as the explicit “what we rely on” table.
 
-| Feature               | GNU Make |                              bmake | Windows notes                           |
-| --------------------- | -------: | ---------------------------------: | --------------------------------------- |
-| Jobserver tokens      |    ≥3.78 | Partial (`-j` local; no sub-pipes) | WSL: OK; MSYS2: fragile spacing         |
-| `$(MAKE)` propagation |     Full |                            Partial | WSL: OK; MSYS2: timestamp skew observed |
-| `.WAIT`               |     ≥4.4 |              No (`.ORDER` instead) | WSL: OK; MSYS2: skew risks              |
-| Grouped targets `&:`  |     ≥4.3 |                                 No | WSL: OK; MSYS2: path escaping pain      |
-| `.ONESHELL`           |    ≥3.82 |                                 No | WSL: OK; MSYS2: shell variance          |
-| `--trace`             | ≥4.0 (contracted) |                                 No | WSL: OK; MSYS2: verbose output          |
+| Feature               |          GNU Make |                              bmake | Windows notes                           |
+| --------------------- |------------------:| ---------------------------------: | --------------------------------------- |
+| Jobserver tokens      |             ≥3.78 | Partial (`-j` local; no sub-pipes) | WSL: OK; MSYS2: fragile spacing         |
+| `$(MAKE)` propagation |              Full |                            Partial | WSL: OK; MSYS2: timestamp skew observed |
+| `.WAIT`               |              ≥4.4 |              No (`.ORDER` instead) | WSL: OK; MSYS2: skew risks              |
+| Grouped targets `&:`  |              ≥4.3 |                                 No | WSL: OK; MSYS2: path escaping pain      |
+| `.ONESHELL`           |             ≥3.82 |                                 No | WSL: OK; MSYS2: shell variance          |
+| `--trace`             | ≥4.3 (contracted) |                                 No | WSL: OK; MSYS2: verbose output          |
 
 (If you claim more than this, you must attach an audit command.)
 
-<span style="font-size: 1em;">[Back to top](#top)</span>
+[Back to top](#top)
 
 ---
 
@@ -262,7 +265,7 @@ diag:
   make -n thirdparty | grep thirdparty
   ```
 
-<span style="font-size: 1em;">[Back to top](#top)</span>
+[Back to top](#top)
 
 ---
 
@@ -340,7 +343,7 @@ stamps/ stamps/tool/:
   diff -u build/attest.txt build/attest.txt || true
   ```
 
-<span style="font-size: 1em;">[Back to top](#top)</span>
+[Back to top](#top)
 
 ---
 
@@ -404,7 +407,7 @@ diff -u build/time.before build/time.after || true
 
 Treat `trace-count` as a heuristic (a signal), not a gate.
 
-<span style="font-size: 1em;">[Back to top](#top)</span>
+[Back to top](#top)
 
 ---
 
@@ -428,7 +431,31 @@ This core is where you stop pretending every problem is solvable “with better 
     * non-file semantics dominate,
     * platform/config matrix dominates the Makefiles.
 
-The migration rubric and “safe hybrid” strategy are already stated in the current module—keep them as your decision gate.
+### Migration Rubric: When to Stay vs. Hybrid vs. Migrate
+
+Use this concrete decision framework:
+
+| Question                                      | Stay with Make                  | Consider Hybrid                        | Migrate Away                          |
+|-----------------------------------------------|---------------------------------|----------------------------------------|---------------------------------------|
+| Primary outputs are files with clear deps?    | Yes                             | Maybe                                  | No                                    |
+| Concurrency hazards modelable with edges?     | Yes                             | Yes                                    | No                                    |
+| Need remote caching/sandboxing first-class?   | No                              | Yes (wrap tools like Bazel/Ninja)      | Yes                                   |
+| Configuration matrix dominates Makefiles?     | No                              | Maybe                                  | Yes                                   |
+| Non-file tasks (deploy, DB migrations) central?| No                              | Yes                                    | Yes                                   |
+
+**Safe hybrid examples**:
+- Keep Make as top-level orchestrator with public API and proofs.
+- Delegate subsystems via stamped targets:
+  ```make
+  rust-lib: rust.stamp
+      +cargo build --release
+      touch rust.stamp
+  app: rust-lib $(OBJS)
+      $(CC) ... rust-lib/target/release/lib.a
+  ```
+- Treat external tools as black-box producers with explicit stamp boundaries.
+
+This ensures deliberate evolution while preserving verification (selftests remain valid).
 
 ### Failure signatures (canonical)
 
@@ -571,7 +598,7 @@ dist.tar.gz: all
 * Parse-time discovery via `$(shell find / ...)` → nondeterminism + slowness.
 * Recursive make via `make -C` (not `$(MAKE)`) → jobserver collapse.
 
-<span style="font-size: 1em;">[Back to top](#top)</span>
+[Back to top](#top)
 
 ---
 
@@ -600,7 +627,7 @@ make -C make-capstone perf
 * Race repro pack: `make-capstone/repro/*.mk`
 * Codegen stressors: `make-capstone/scripts/*`
 
-<span style="font-size: 1em;">[Back to top](#top)</span>
+[Back to top](#top)
 
 ---
 
@@ -611,7 +638,7 @@ Each exercise is **Task → Expected → Forensics → Fix**.
 
 ### Exercise 1 — Add a hard GNU Make floor
 
-* **Task:** enforce GNU Make ≥ 4.0 at parse-time.
+* **Task:** enforce GNU Make ≥ 4.3 at parse-time.
 * **Expected:** unsupported Make fails immediately with a clear error.
 * **Forensics:** `make -p | grep '^MAKE_VERSION'`.
 * **Fix:** use prefix filtering (`4.% 5.%`), not naive string comparisons.
@@ -651,7 +678,7 @@ Each exercise is **Task → Expected → Forensics → Fix**.
 * **Forensics:** demonstrate `selftest` (or your local equivalent) still proves equivalence.
 * **Fix:** treat external system as a black box; don’t dissolve your artifact boundary.
 
-<span style="font-size: 1em;">[Back to top](#top)</span>
+[Back to top](#top)
 
 ---
 
@@ -668,6 +695,6 @@ You are done only when all proofs pass:
 6. **Failure-mode proof**: you can reproduce (and then eliminate) at least one nondeterminism bug (shared append, temp collision, or missing edge).
 7. **Decision proof**: if rubric says “hybrid”, you can keep Make’s public API stable while delegating internals safely.
 
-<span style="font-size: 1em;">[Back to top](#top)</span>
+[Back to top](#top)
 
 ---

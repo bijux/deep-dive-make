@@ -37,7 +37,7 @@ By the end of this module, you can:
 * Scale a repo into layers (`mk/*.mk`, optional overrides) while preserving a **single top-level DAG**.
 * Prove correctness under concurrency using a selftest harness and a repro pack you can run until you can **predict** the failure.
 
-<span style="font-size: 1em;">[Back to top](#top)</span>
+[Back to top](#top)
 
 ---
 
@@ -131,7 +131,7 @@ Create these files exactly.
 #### `m02/Makefile`
 
 ```make
-# m02/Makefile — Module 02 simulator (GNU Make ≥ 4.0)
+# m02/Makefile — Module 02 simulator (GNU Make ≥ 4.3)
 #
 # Contract: convergent, parallel-safe, deterministic discovery, and a selftest
 # that proves serial/parallel equivalence.
@@ -432,7 +432,7 @@ You pass Module 02 only if all are true:
 * **No poison artifacts:** failures do not leave plausible outputs behind.
 * **No concurrency-dependent behavior:** `-j` changes speed, not semantics.
 
-<span style="font-size: 1em;">[Back to top](#top)</span>
+[Back to top](#top)
 
 ---
 
@@ -503,7 +503,7 @@ make -f repro/04-generated-header.mk -j8 all
 make -f repro/04-generated-header.mk -j8 all   # second run must be a no-op
 ```
 
-<span style="font-size: 1em;">[Back to top](#top)</span>
+[Back to top](#top)
 
 ---
 
@@ -579,7 +579,7 @@ make -f repro/01-shared-log.mk -j8 all
 cksum shared.log   # must match
 ```
 
-<span style="font-size: 1em;">[Back to top](#top)</span>
+[Back to top](#top)
 
 ---
 
@@ -637,7 +637,7 @@ touch build/        # or any directory used for outputs
 make -n all         # should show no rebuild caused *only* by directory mtime noise
 ```
 
-<span style="font-size: 1em;">[Back to top](#top)</span>
+[Back to top](#top)
 
 ---
 
@@ -696,7 +696,7 @@ make clean && make selftest
 
 and still pass.
 
-<span style="font-size: 1em;">[Back to top](#top)</span>
+[Back to top](#top)
 
 ---
 
@@ -751,7 +751,7 @@ tmp="$@.tmp"
 
 You must be able to run each repro until it fails, then apply the fix and make it stable under `-j8`.
 
-<span style="font-size: 1em;">[Back to top](#top)</span>
+[Back to top](#top)
 
 ---
 
@@ -777,7 +777,7 @@ make -C make-capstone --trace all
 * Selftest harness: `make-capstone/tests/run.sh`
 * Race teaching pack: `make-capstone/repro/*.mk`
 
-<span style="font-size: 1em;">[Back to top](#top)</span>
+[Back to top](#top)
 
 ---
 
@@ -821,7 +821,7 @@ Format is always **Task → Expected → Forensics → Fix**.
 * **Forensics:** if it fails, the *first* divergence is diagnosed with `--trace`.
 * **Fix:** tighten the graph, fix atomic publishing, fix stamps, fix discovery.
 
-<span style="font-size: 1em;">[Back to top](#top)</span>
+[Back to top](#top)
 
 ---
 
@@ -837,6 +837,6 @@ You pass Module 02 only if you can demonstrate (in the **Module 02 simulator**, 
 
 Next: Module 03 makes determinism, CI contracts, and build-system selftests non-negotiable at production pressure.
 
-<span style="font-size: 1em;">[Back to top](#top)</span>
+[Back to top](#top)
 
 ---
