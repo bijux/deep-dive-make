@@ -49,6 +49,8 @@ find build -type f \( -name '*.o' -o -name '*.d' -o -name 'flags.stamp' \) -prin
 echo "  Hashing files..."
 while IFS= read -r f; do hash_cmd "$f"; done < filelist.tmp > serial_hash.tmp
 rm -f filelist.tmp
+# Note: some compilers introduce nondeterminism (debug info paths, timestamps).
+# The capstone uses -frandom-seed and fixed flags to minimize this.
 hash_cmd app build/include/dynamic.h build/bin/dyn1 build/bin/dyn2 >> serial_hash.tmp
 echo "  Sorting hashes..."
 LC_ALL=C sort serial_hash.tmp > serial.sum

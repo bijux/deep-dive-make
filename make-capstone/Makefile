@@ -1,5 +1,5 @@
 # Capstone Repository — Make & Makefiles Deep Dive
-# Final state after Modules 01–05 (GNU Make ≥ 4.0; POSIX /bin/sh)
+# Final state after Modules 01–05 (GNU Make ≥ 4.3; POSIX /bin/sh)
 
 MAKEFLAGS += -rR
 .SUFFIXES:

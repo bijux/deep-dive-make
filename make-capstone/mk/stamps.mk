@@ -10,10 +10,22 @@
 #
 # Changing knobs => different signature => new real stamp => objects rebuild.
 
-HASH_CMD := cksum  # POSIX; stable across environments (Module 01 contract)
+# Prefer sha256sum (widely available, cryptographic) with cksum fallback.
+# Documented risk: cksum collision probability higher on large flag sets,
+# but sufficient for short semantic signatures. sha256sum absent on minimal systems.
+ifneq ($(shell command -v sha256sum 2>/dev/null),)
+  HASH_CMD := sha256sum
+  HASH_CUT := cut -c1-12
+else ifneq ($(shell command -v shasum 2>/dev/null),)
+  HASH_CMD := shasum -a 256
+  HASH_CUT := cut -c1-12
+else
+  HASH_CMD := cksum
+  HASH_CUT := awk '{print $$1}' | cut -c1-12
+endif
 
 FLAGS_LINE := CC=$(CC) CPPFLAGS=$(CPPFLAGS) CFLAGS=$(CFLAGS) DEPFLAGS=$(DEPFLAGS) LDFLAGS=$(LDFLAGS) LDLIBS=$(LDLIBS) INC_DIR=$(INC_DIR)
-FLAGS_ID   := $(shell printf '%s' "$(FLAGS_LINE)" | $(HASH_CMD) | awk '{print $$1}' | cut -c1-12)
+FLAGS_ID   := $(shell printf '%s' "$(FLAGS_LINE)" | $(HASH_CMD) | $(HASH_CUT))
 
 FLAGS_STAMP_REAL := $(BLD_DIR)/flags.$(FLAGS_ID).stamp
 FLAGS_STAMP      := $(BLD_DIR)/flags.stamp

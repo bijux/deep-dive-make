@@ -1,7 +1,15 @@
 <a id="top"></a>
 # Module 01 — Foundations: The Build Graph and Truth
 
-Module 01 teaches the only model that scales: **Make evaluates a dependency graph (a DAG)**. Recipes are not “steps”; they are **publish operations** whose outputs must be correct under edits, failures, and (later) parallel scheduling.
+### Quick Reference
+| Concept                  | Key Takeaway                                      | Proof Command                  |
+|--------------------------|---------------------------------------------------|--------------------------------|
+| DAG evaluation           | Targets rebuild only when prerequisites are newer  | `make --trace all`             |
+| Hidden inputs            | Must be modeled explicitly (stamps)               | Inject time-based flag → non-convergence |
+| Atomic publication       | Temp → rename + `.DELETE_ON_ERROR`                | Force failure → no poison artifact |
+| Depfiles                 | Automatic header tracking                         | Touch header → correct rebuild |
+
+Module 01 establishes the core model: Make evaluates a dependency graph. Correct rebuild behavior requires explicit edges, safe publication, and convergence. This module is self-contained: you build a tiny project, deliberately break correctness, diagnose with Make’s own forensics, fix with canonical patterns, and **prove convergence**.
 
 This module is self-contained: you build a tiny project, deliberately break correctness, diagnose with Make’s own forensics, fix with canonical patterns, and **prove convergence**.
 
