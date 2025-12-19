@@ -1,10 +1,10 @@
 [build-system]
-requires = ["hatchling>=1.28"]
+requires = ["hatchling>=1.28", "hatch-vcs"]
 build-backend = "hatchling.build"
 
 [project]
 name = "deep-dive-make"
-version = "0.1.0"
+dynamic = ["version"]
 description = "Deep Dive Make is a five-module course-book that teaches GNU Make as a disciplined build-graph engine, plus an executable capstone."
 readme = "README.md"
 requires-python = ">=3.10"
@@ -55,6 +55,10 @@ only-include = [
   ".gitignore",
   ".github",
 ]
+
+[tool.hatch.version]
+source = "vcs"
+fallback-version = "0.1.0"
 
 [tool.ruff]
 line-length = 100
