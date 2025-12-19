@@ -4,30 +4,25 @@ site_description: >-
   build-graph engine—focused on correctness, determinism, and parallel-safe design.
 site_author: Bijan Mousavi
 site_url: https://bijux.github.io/deep-dive-make/
-
 repo_name: bijux/deep-dive-make
 repo_url: https://github.com/bijux/deep-dive-make
 edit_uri: edit/main/
 
-docs_dir: .
+docs_dir: course-book
 site_dir: site
-use_directory_urls: true
 
 theme:
   name: material
   language: en
-
-  logo: docs/assets/bijux_logo_hq.png
-  favicon: docs/assets/bijux_icon.png
-
+  logo: assets/bijux_logo_hq.png
+  favicon: assets/bijux_icon.png
   features:
-    - navigation.instant
-    - navigation.tracking
     - navigation.sections
     - navigation.top
+    - toc.follow
     - search.suggest
     - search.highlight
-
+    - content.code.copy
   palette:
     - scheme: default
       toggle:
@@ -37,22 +32,30 @@ theme:
       toggle:
         icon: material/brightness-4
         name: Switch to light mode
-
   icon:
     repo: fontawesome/brands/github
 
 markdown_extensions:
   - admonition
   - attr_list
-  - pymdownx.superfences:
-    custom_fences:
-      - name: mermaid
-        class: mermaid
-        format: !!python/name:pymdownx.superfences.fence_code_format
+  - md_in_html
   - footnotes
   - tables
   - toc:
       permalink: true
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
 
 plugins:
   - search
@@ -60,14 +63,15 @@ plugins:
       include_dir: .
 
 nav:
-  - Home: course-book/index.md
-  - "Outline": course-book/module-00.md
-  - "01 — Foundations": course-book/module-01.md
-  - "02 — Scaling": course-book/module-02.md
-  - "03 — Production Practice": course-book/module-03.md
-  - "04 — Semantics Under Pressure": course-book/module-04.md
-  - "05 — Hardening": course-book/module-05.md
-  - "Capstone": course-book/readme-capstone.md
+  - Home: index.md
+  - Course Outline: module-00.md
+  - Modules:
+      - "01 — Foundations": module-01.md
+      - "02 — Scaling": module-02.md
+      - "03 — Production Practice": module-03.md
+      - "04 — Semantics Under Pressure": module-04.md
+      - "05 — Hardening": module-05.md
+  - Capstone Project: readme-capstone.md
 
 extra:
   homepage: https://bijux.github.io/

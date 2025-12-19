@@ -51,3 +51,6 @@ dist.tar.gz
 
 # MkDocs build output
 site/
+
+# python
+.venv

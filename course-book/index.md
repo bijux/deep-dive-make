@@ -8,8 +8,8 @@ A five-module course-book for learning **GNU Make as a declarative build-graph e
 [![Docs](https://img.shields.io/badge/docs-site-blue?style=flat-square)](https://bijux.github.io/deep-dive-make/)
 [![Capstone](https://img.shields.io/badge/capstone-make--capstone-green?style=flat-square)](https://github.com/bijux/deep-dive-make/tree/main/make-capstone)
 
-**At a glance**: progressive modules • minimal, reproducible examples • exercises with verification hooks • a runnable capstone that proves the claims.
-**Quality bar**: every core assertion is designed to be *testable* using `--trace`, `-p`, and serial/parallel equivalence checks. This course-book assumes **GNU Make 4.3+** and intentionally avoids “hand-wavy” build folklore.
+> **At a glance**: progressive modules • minimal, reproducible examples • exercises with verification hooks • a runnable capstone that proves the claims.  
+> **Quality bar**: every core assertion is designed to be *testable* using `--trace`, `-p`, and serial/parallel equivalence checks. This course-book assumes **GNU Make 4.3+** and intentionally avoids “hand-wavy” build folklore.
 ---
 ## Table of Contents
 - [Why this course-book exists](#why-this-course-book-exists)
@@ -25,14 +25,15 @@ A five-module course-book for learning **GNU Make as a declarative build-graph e
 ---
 ## Why this course-book exists
 Many Make-based systems “work” by accident: undeclared inputs, ordering-by-phony targets, stamp files used as wishful thinking, and recipes that become unsafe the moment `-j` is enabled. These failures are costly because they are **intermittent**, **non-local**, and **hard to reproduce**.
-This course-book treats Make as it is: an engine for evaluating a dependency graph. It teaches a strict contract:
-- **Truthful DAG**: all real edges are declared (depfiles, manifests, or principled stamps).
-- **Atomic publication**: outputs appear only when their construction succeeds.
-- **Parallel safety**: `-j` changes throughput, not meaning.
-- **Determinism**: serial and parallel builds converge to the same results.
-- **Self-testing**: invariants are continuously verified, not assumed.
+This course-book treats Make as it is: an engine for evaluating a dependency graph. It teaches a strict contract:  
+- **Truthful DAG**: all real edges are declared (depfiles, manifests, or principled stamps).  
+- **Atomic publication**: outputs appear only when their construction succeeds.  
+- **Parallel safety**: `-j` changes throughput, not meaning.  
+- **Determinism**: serial and parallel builds converge to the same results.  
+- **Self-testing**: invariants are continuously verified, not assumed.  
 If you maintain a legacy Makefile or design a new build, the objective is the same: **correctness that survives scale and change**.  
 [Back to top](#top)
+
 ---
 ## How the course-book is written
 Each module follows a consistent, engineering-first structure:
@@ -42,9 +43,11 @@ You are expected to distrust claims that cannot be checked. Where possible, the 
 - `make -p` (expanded database: targets/vars/rules)
 - serial vs parallel equivalence checks (hashes, manifests, outputs)  
 [Back to top](#top)
+
 ---
 ## What you will learn
 ### Module map
+
 | Module | Title | What it gives you |
 |---:|---|---|
 | 01 | Foundations | Make semantics, correct rebuild triggers, depfiles, atomicity primitives. |
@@ -52,8 +55,10 @@ You are expected to distrust claims that cannot be checked. Where possible, the 
 | 03 | Production Practice | Determinism, CI discipline, selftests, constraints that prevent drift. |
 | 04 | Semantics Under Pressure | Edge cases that matter in real incidents: precedence, includes, multi-output modeling, rule subtleties. |
 | 05 | Hardening | Portability, jobserver correctness, “hermetic-ish” techniques, performance, failure isolation. |
+
 Syllabus: [`module-00.md`](module-00)  
 [Back to top](#top)
+
 ---
 ## Prerequisites
 You do not need prior Make mastery. You do need the ability to work comfortably in a shell.

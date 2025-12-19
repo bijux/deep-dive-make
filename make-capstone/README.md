@@ -9,6 +9,7 @@ The capstone is the executable reference build for **Deep Dive Make**: a compact
 [![Capstone](https://img.shields.io/badge/capstone-make--capstone-green?style=flat-square)](https://github.com/bijux/deep-dive-make/tree/main/make-capstone)
 
 > **In one line:** a small build that behaves like a serious build—correct under change, correct under `-j`, and instrumented to catch its own lies.
+
 ---
 ## Table of Contents
 - [Purpose](#purpose)
@@ -24,13 +25,14 @@ The capstone is the executable reference build for **Deep Dive Make**: a compact
 ---
 ## Purpose
 This capstone exists to eliminate ambiguity. “Correct Makefiles” should not be a matter of taste; they should be a matter of **verifiable properties**.
-This build is designed to enforce:
-- **Truthful DAG**: edges are explicit (depfiles, manifests/stamps where required), with deterministic discovery.
-- **Atomic publication**: outputs are not visible until they are valid.
-- **Parallel safety**: `-j` accelerates execution but does not alter meaning.
-- **Determinism**: serial and parallel runs converge to identical outputs.
-- **Self-tests**: the build system is treated as code—tested, gated, and regression-resistant.  
+This build is designed to enforce:  
+- **Truthful DAG**: edges are explicit (depfiles, manifests/stamps where required), with deterministic discovery.  
+- **Atomic publication**: outputs are not visible until they are valid.  
+- **Parallel safety**: `-j` accelerates execution but does not alter meaning.  
+- **Determinism**: serial and parallel runs converge to identical outputs.  
+- **Self-tests**: the build system is treated as code—tested, gated, and regression-resistant.    
 [Back to top](#top)
+
 ---
 ## Quick start
 From this directory (`make-capstone/`):
@@ -45,9 +47,11 @@ gmake selftest
 ```
 A passing `selftest` is the signal that the contract holds: convergence, serial/parallel equivalence, and negative tests designed to detect common defects.
 [Back to top](#top)
+
 ---
 ## Public targets
 These are the stable entrypoints you can rely on and extend:
+
 | Target | Meaning | Why you care |
 | ------------------- | --------------------------------------------------------------------- | ------------------------------------ |
 | `help` | Print available targets and key knobs. | Discoverability. |
@@ -59,8 +63,10 @@ These are the stable entrypoints you can rely on and extend:
 | `portability-audit` | Check version/tool assumptions and feature availability. | Cross-platform discipline. |
 | `repro` | List available failure repros. | Training + debugging. |
 | `clean` | Remove build outputs and stamps. | Reset. |
+
 Optional (explicit opt-in): `USE_EVAL=yes eval-demo` demonstrates quarantined `$(eval)` patterns.  
 [Back to top](#top)
+
 ---
 ## What it builds
 A deliberately small C project with real build-system pressure points:
@@ -72,34 +78,37 @@ Core mechanics:
 * publication is atomic (temp → rename)
 * tests assert behavior (not just “it compiled”)  
 [Back to top](#top)
+
 ---
 ## Architecture
 The Makefiles are intentionally layered so the design stays readable under growth:
 ```text
 make-capstone/
-├── Makefile # Entry point: public targets + includes
-├── mk/ # Build mechanics, separated by responsibility
-│ ├── common.mk # toolchain defaults and shared configuration
-│ ├── macros.mk # reusable primitives (atomic publish, helpers)
-│ ├── objects.mk # discovery and object graph construction
-│ ├── stamps.mk # modeled hidden inputs (tools/flags/env)
-│ ├── contract.mk # selftests, gates, and invariants
+├── Makefile        # Entry point: public targets + includes
+├── mk/             # Build mechanics, separated by responsibility
+│ ├── common.mk     # toolchain defaults and shared configuration
+│ ├── macros.mk     # reusable primitives (atomic publish, helpers)
+│ ├── objects.mk    # discovery and object graph construction
+│ ├── stamps.mk     # modeled hidden inputs (tools/flags/env)
+│ ├── contract.mk   # selftests, gates, and invariants
 │ └── rules_eval.mk # quarantined eval patterns (opt-in)
-├── src/ # C sources (including dynamic/ discovery)
-├── include/ # stable headers
-├── scripts/ # generators (e.g., generated headers)
-├── tests/ # runtime assertions + build invariants harness
-├── repro/ # intentionally broken cases with fixes
-└── thirdparty/ # stub boundary for external integration
+├── src/            # C sources (including dynamic/ discovery)
+├── include/        # stable headers
+├── scripts/        # generators (e.g., generated headers)
+├── tests/          # runtime assertions + build invariants harness
+├── repro/          # intentionally broken cases with fixes
+└── thirdparty/     # stub boundary for external integration
 ```
 The intent is to model a “real” build in miniature: the same failure modes show up, but the surface area stays small enough to audit.  
 [Back to top](#top)
+
 ---
 ## Platform notes
 * **macOS**: `/usr/bin/make` is BSD Make—use GNU Make (`gmake`).
 * **Toolchains differ**: determinism is verified via stamps/equivalence checks rather than assumed.
 * **Portability**: the build declares its boundary (GNU Make floor, shell assumptions) and audits it with `portability-audit`.  
 [Back to top](#top)
+
 ---
 ## Repro pack
 `repro/` contains small Makefiles that intentionally demonstrate failure modes (often only visible under `-j`), along with the repair patterns taught in the course-book.
@@ -123,6 +132,7 @@ make -f repro/01-shared-append.mk -j4
 The capstone is referenced throughout the modules via “tie-ins.” The expectation is a tight loop:
 **read → reproduce → repair → verify**  
 [Back to top](#top)
+
 ---
 ## Contributing
 Contributions are welcome when they improve **correctness**, **clarity**, or **reproducibility** (new repros, sharper invariants, better diagnostics).
@@ -133,6 +143,7 @@ make -C make-capstone selftest
 (or `gmake -C make-capstone selftest` on macOS)
 Open a PR against `main` with a short “claim → proof” note (what you changed, why it’s correct, and how it’s verified).  
 [Back to top](#top)
+
 ---
 ## License
 MIT — see [`LICENSE`](https://github.com/bijux/deep-dive-make/blob/main/LICENSE). © 2025 Bijan Mousavi.  
